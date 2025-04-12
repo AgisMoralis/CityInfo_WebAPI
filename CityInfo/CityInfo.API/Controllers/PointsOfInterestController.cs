@@ -1,4 +1,5 @@
 ﻿using CityInfo.API.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 namespace CityInfo.API.Controllers
 {
@@ -65,7 +66,7 @@ namespace CityInfo.API.Controllers
         }
 
         [HttpPut("{pointofinterestid}")]
-        public ActionResult<PointOfInterestDto> UpdatePointOfInterest(int cityId, int pointofinterestid, PointOfInterestForUpdatingDto pointOfInterest)
+        public ActionResult UpdatePointOfInterest(int cityId, int pointofinterestid, PointOfInterestForUpdatingDto pointOfInterest)
         {
             // NOTE: PUT actions can return a 200 response that includes the new Point of Interest as body of that response
             // NOTE: or can return a 204 response without any content in the results
@@ -86,6 +87,50 @@ namespace CityInfo.API.Controllers
             pointOfInterestFromDatastore.Description = pointOfInterest.Description;
 
             // NOTE: Here we decided that our PUT action shall return a 204 response without any content
+            return NoContent();
+        }
+
+        [HttpPatch("{pointofinterestid}")]
+        public ActionResult PartiallyUpdatePointOfInterest(int cityId, int pointofinterestid, JsonPatchDocument<PointOfInterestForUpdatingDto> patchDocument)
+        {
+            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            if (city is null)
+            {
+                return NotFound();
+            }
+
+            var pointOfInterestFromDatastore = city.PointsOfInterest.FirstOrDefault(p => p.Id == pointofinterestid);
+            if (pointOfInterestFromDatastore is null)
+            {
+                return NotFound();
+            }
+
+            var pointOfInterestToPatch = new PointOfInterestForUpdatingDto()
+            {
+                Name = pointOfInterestFromDatastore.Name,
+                Description = pointOfInterestFromDatastore.Description
+            };
+
+            // The 'ModelState' will report as invalid if there are mistakes in the input model
+            // of this POST action: "JsonPatchDocument<PointOfInterestForUpdatingDto> patchDocument"
+            // If that input JsonPatchDocument is valid and can be used for patching a
+            // "PointOfInterest" object, the 'ModelState' will report itself as valid
+            patchDocument.ApplyTo(pointOfInterestToPatch, ModelState);
+            if (!ModelState.IsValid) 
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Check if the "PointOfInterestForUpdatingDto" is still valid after applying the JsonPatchDocument
+            // This will use the attributes of the DTO object (model) for the validation
+            if(!TryValidateModel(pointOfInterestToPatch))
+            {
+                return BadRequest(ModelState);
+            }
+
+            pointOfInterestFromDatastore.Name = pointOfInterestToPatch.Name;
+            pointOfInterestFromDatastore.Description = pointOfInterestToPatch.Description;
+
             return NoContent();
         }
     }
