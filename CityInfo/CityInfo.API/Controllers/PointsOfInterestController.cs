@@ -53,6 +53,8 @@ namespace CityInfo.API.Controllers
             };
             city.PointsOfInterest.Add(newPointOfInterest);
 
+            // Returns a 201 HTTP response to successfully state that the new Point of Interest
+            // was created in the resources. The body of the response includes that new Point of Interest.
             return CreatedAtRoute("GetPointOfInterest",
                 new
                 {
@@ -60,6 +62,31 @@ namespace CityInfo.API.Controllers
                     pointOfInterestId = newPointOfInterest.Id
                 },
                 newPointOfInterest);
+        }
+
+        [HttpPut("{pointofinterestid}")]
+        public ActionResult<PointOfInterestDto> UpdatePointOfInterest(int cityId, int pointofinterestid, PointOfInterestForUpdatingDto pointOfInterest)
+        {
+            // NOTE: PUT actions can return a 200 response that includes the new Point of Interest as body of that response
+            // NOTE: or can return a 204 response without any content in the results
+
+            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            if (city is null)
+            {
+                return NotFound();
+            }
+
+            var pointOfInterestFromDatastore = city.PointsOfInterest.FirstOrDefault(p => p.Id == pointofinterestid);
+            if (pointOfInterestFromDatastore is null)
+            {
+                return NotFound();
+            }
+
+            pointOfInterestFromDatastore.Name = pointOfInterest.Name;
+            pointOfInterestFromDatastore.Description = pointOfInterest.Description;
+
+            // NOTE: Here we decided that our PUT action shall return a 204 response without any content
+            return NoContent();
         }
     }
 }

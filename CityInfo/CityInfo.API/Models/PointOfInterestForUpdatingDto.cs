@@ -2,7 +2,7 @@
 
 namespace CityInfo.API.Models
 {
-    public class PointOfInterestForCreationDto
+    public class PointOfInterestForUpdatingDto
     {
         [Required(ErrorMessage = "You should provide a name value for the new Point of Interest.")]
         [MaxLength(10, ErrorMessage = "The name value of the new Point of Interest shall not exceed the maximum length of 10 characters.")]
