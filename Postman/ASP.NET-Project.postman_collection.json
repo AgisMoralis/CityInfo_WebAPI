@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "ee3372f4-18ea-4097-b101-6809e0527367",
+		"_postman_id": "8959cb20-a0b6-4a02-8ccc-ccf74e13980d",
 		"name": "ASP.NET-Project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "43788663"
 	},
 	"item": [
 		{
-			"name": "Get Cities",
+			"name": "Get Cities (modified GET request header 'Accept' parameter to accept xml content response)",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
 					"accept": true
@@ -35,10 +35,59 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Get Cities",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "xml",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "1242"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/xml; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:30:37 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "<ArrayOfCityDto xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/CityInfo.API.Models\">\n    <CityDto>\n        <Description>City with a lot of people</Description>\n        <Id>1</Id>\n        <Name>NYC</Name>\n        <PointsOfInterest>\n            <PointOfInterestDto>\n                <Description>Big park</Description>\n                <Id>1</Id>\n                <Name>Central Park</Name>\n            </PointOfInterestDto>\n            <PointOfInterestDto>\n                <Description>Tall building</Description>\n                <Id>2</Id>\n                <Name>Empire State</Name>\n            </PointOfInterestDto>\n        </PointsOfInterest>\n    </CityDto>\n    <CityDto>\n        <Description>Ancient City</Description>\n        <Id>2</Id>\n        <Name>Athens</Name>\n        <PointsOfInterest>\n            <PointOfInterestDto>\n                <Description>Ancient temple</Description>\n                <Id>1</Id>\n                <Name>Parthenon</Name>\n            </PointOfInterestDto>\n            <PointOfInterestDto>\n                <Description>Center of the city</Description>\n                <Id>2</Id>\n                <Name>Acropolis</Name>\n            </PointOfInterestDto>\n        </PointsOfInterest>\n    </CityDto>\n    <CityDto>\n        <Description>City with Eiffel Tower</Description>\n        <Id>3</Id>\n        <Name>Paris</Name>\n        <PointsOfInterest>\n            <PointOfInterestDto>\n                <Description>Tall tower</Description>\n                <Id>1</Id>\n                <Name>Eiffel Tower</Name>\n            </PointOfInterestDto>\n            <PointOfInterestDto>\n                <Description>World's biggest museum</Description>\n                <Id>2</Id>\n                <Name>Louvre Museum</Name>\n            </PointOfInterestDto>\n        </PointsOfInterest>\n    </CityDto>\n</ArrayOfCityDto>"
+				}
+			]
 		},
 		{
-			"name": "Get City",
+			"name": "Get City (get the 3rd city from the datastore)",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -59,10 +108,54 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Get City",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "241"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:34:08 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"name\": \"Paris\",\n    \"description\": \"City with Eiffel Tower\",\n    \"numberOfPointsOfInterest\": 2,\n    \"pointsOfInterest\": [\n        {\n            \"id\": 1,\n            \"name\": \"Eiffel Tower\",\n            \"description\": \"Tall tower\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Louvre Museum\",\n            \"description\": \"World's biggest museum\"\n        }\n    ]\n}"
+				}
+			]
 		},
 		{
-			"name": "Get Points of Interest",
+			"name": "Get Points of Interest (get the points of interest of the 3rd city from the datastore)",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -84,10 +177,55 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Get Points of Interest",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "130"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:36:17 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Eiffel Tower\",\n        \"description\": \"Tall tower\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Louvre Museum\",\n        \"description\": \"World's biggest museum\"\n    }\n]"
+				}
+			]
 		},
 		{
-			"name": "Get Point of Interest",
+			"name": "Get Point of Interest (get the 1st point of interest of the 3rd city from the datastore)",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -110,10 +248,56 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Get Point of Interest",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "57"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:37:35 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"Eiffel Tower\",\n    \"description\": \"Tall tower\"\n}"
+				}
+			]
 		},
 		{
-			"name": "Get File",
+			"name": "Get File (get the file with id 2 from the datastore)",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -121,10 +305,943 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "https://localhost:{{portNumber}}/api/files/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"files",
+						"2"
+					]
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Post Point of Interest (add new point of interest in the 3rd city of the datastore, using correct 'Name' and 'Description' POST request body parameters)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Montmartre\",\r\n    \"description\": \"Nice church\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"3",
+						"pointsofinterest"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post Point of Interest",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Montmartre\",\r\n    \"description\": \"Nice church\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "56"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:40:42 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Location",
+							"value": "https://localhost:7030/api/cities/3/PointsOfInterest/3"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"name\": \"Montmartre\",\n    \"description\": \"Nice church\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Post Point of Interest (invalid POST request body)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Random",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"3",
+						"pointsofinterest"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post Point of Interest (invalid request body)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "Random",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "357"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/problem+json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:42:53 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": {\n        \"\": [\n            \"Unexpected character encountered while parsing value: R. Path '', line 0, position 0.\"\n        ],\n        \"pointOfInterest\": [\n            \"The pointOfInterest field is required.\"\n        ]\n    },\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"00-dafd9b4dcc7ec35b30674373bb484624-a1b2329480636831-00\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Post Point of Interest (missing 'Name' parameter and use of 'InvalidProperty' parameter in the POST request body returns error response with custom error messages)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"invalidProperty\": 3,\r\n    \"description\": \"Nice church\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"3",
+						"pointsofinterest"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post Point of Interest (missing 'Name' parameter and use of 'InvalidProperty' parameter in the POST request body returns error response with custom error messages)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"invalidProperty\": 3,\r\n    \"description\": \"Nice church\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "277"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/problem+json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:45:14 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": {\n        \"Name\": [\n            \"You should provide a name value for the new Point of Interest.\"\n        ]\n    },\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n    \"title\": \"One or more validation errors occurred.\",\n    \"status\": 400,\n    \"traceId\": \"00-a2ce9694447ed45718c27e52faf94478-20a9b14e7ba1234e-00\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Put Point of Interest (fully update the 2nd point of interest of the 3rd city of the datastore and receive 204 no content response)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Louvre\",\r\n    \"description\": \"Biggest museum\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"3",
+						"pointsofinterest",
+						"2"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Put (update) Point of Interest",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Louvre\",\r\n    \"description\": \"Biggest museum\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest",
+								"2"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:45:44 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Put Point of Interest (fully update the 2nd point of interest of the 3rd city of the datastore without 'Description' parameter - default one used - and receive 204 no content response",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Louvre\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"3",
+						"pointsofinterest",
+						"2"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Put Point of Interest (no 'Description' parameter, the default shall be used)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Louvre\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest",
+								"2"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:49:15 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Patch Point of Interest (partially update 1 property of the the 1st point of interest of the 1st city of the datastore using JsonPatchDocument in the PATCH body request and receive 204 no content response",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/name\",\r\n        \"value\": \"Updated - Park\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"1",
+						"pointsofinterest",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Put Point of Interest (fully update the 2nd point of interest of the 3rd city of the datastore without 'Description' parameter - default one used - and receive 204 no content response",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/name\",\r\n        \"value\": \"Updated - Park\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"1",
+								"pointsofinterest",
+								"1"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:53:35 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Patch Point of Interest (partially update the 2 properties of the 1st point of interest of the 1st city of the datastore using JsonPatchDocument in the PATCH body request and receive 204 no content response",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/name\",\r\n        \"value\": \"Updated Second Time - Park\"\r\n    },\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/description\",\r\n        \"value\": \"Updated - Huge Park\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"1",
+						"pointsofinterest",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/name\",\r\n        \"value\": \"Updated Second Time - Park\"\r\n    },\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/description\",\r\n        \"value\": \"Updated - Huge Park\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"1",
+								"pointsofinterest",
+								"1"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 20:59:11 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Patch Point of Interest (try to partially update invalid property of the 1st point of interest of the 1st city of the datastore using JsonPatchDocument in the PATCH body request)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/invalidProperty\",\r\n        \"value\": \"Updated value\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"1",
+						"pointsofinterest",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Patch",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/invalidProperty\",\r\n        \"value\": \"Updated value\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"1",
+								"pointsofinterest",
+								"1"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "164"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/problem+json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 21:02:46 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n    \"title\": \"Bad Request\",\n    \"status\": 400,\n    \"traceId\": \"00-bdfbf5033bc58ae339581b8291244cae-01d2b7fc5bb1aa03-00\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Patch Point of Interest (try to partially update the 'Name' property by removing its value of the 1st point of interest of the 1st city of the datastore using JsonPatchDocument in the PATCH body request)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"op\": \"remove\",\r\n        \"path\": \"/name\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"1",
+						"pointsofinterest",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"op\": \"remove\",\r\n        \"path\": \"/name\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"1",
+								"pointsofinterest",
+								"1"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "75"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 12 Apr 2025 21:19:22 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"Name\": [\n        \"You should provide a name value for the new Point of Interest.\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Point of Interest (delete the 1st point of interest of the 1st city from the datastore)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"1",
+						"pointsofinterest",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"1",
+								"pointsofinterest",
+								"1"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 15 Apr 2025 20:01:54 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Post File (upload a new image in the resources of the application, using form-data file in the POST body request)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Agis/GIT/ASP.NET-Project/Postman/Data/GithubNeon.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/files",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"files"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post File (upload a new image in the resources of the application)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Agis/GIT/ASP.NET-Project/Postman/Data/GithubNeon.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/files",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"files"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 15 Apr 2025 20:32:43 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "The file has been uploaded successfully"
+				}
+			]
 		}
 	]
 }

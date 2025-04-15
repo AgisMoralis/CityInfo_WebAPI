@@ -11,7 +11,8 @@ builder.Services.AddControllers(options =>
 {
     // When a consumer asks for a specific type of content representation that the API does not support, the API should return a status code about that
     options.ReturnHttpNotAcceptable = true;
-}).AddXmlDataContractSerializerFormatters();
+}).AddNewtonsoftJson()
+.AddXmlDataContractSerializerFormatters();
 
 // Example of defining inside the server error responses additional fields and detailed info messages
 //builder.Services.AddProblemDetails(options =>
