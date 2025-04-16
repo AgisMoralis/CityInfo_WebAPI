@@ -7,11 +7,33 @@ namespace CityInfo.API.Controllers
     [Route("api/cities/{cityId}/[controller]")]
     public class PointsOfInterestController : ControllerBase
     {
-        [HttpGet()]
+        // Private members
+        private readonly ILogger<PointsOfInterestController> _logger;
+
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger) 
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        [HttpGet]
         public ActionResult<IEnumerable<PointOfInterestDto>> GetPointsOfInterest(int cityId)
         {
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
-            return city is null ? NotFound() : Ok(city.PointsOfInterest);
+            try
+            {
+                var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+                if (city is null)
+                {
+                    _logger.LogInformation($"The city with id {cityId} was not found in the Datastore, when trying to access the points of interests.");
+                    return NotFound();
+                }
+
+                return Ok(city.PointsOfInterest);
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogCritical($"Unexpected exception occurred when trying to access the points of interests of the city with id {cityId}.", ex);
+                return StatusCode(500, $"A problem occurred while handling your request.");
+            }
         }
 
         [HttpGet("{pointofinterestid}", Name = "GetPointOfInterest")]

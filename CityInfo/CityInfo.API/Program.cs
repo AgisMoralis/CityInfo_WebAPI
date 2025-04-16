@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// This would clean all the configurations applied from the service provider into the logging service
+// and we could add right below a custom configuration to it (the Console one)
+// This solution in combination with the configuration file "appsettings.Development.json" gives flexibility on how to use the logging service
+// builder.Logging.ClearProviders();
+// builder.Logging.AddConsole();
+
 // Add services to the container.
 builder.Services.AddAuthentication(
        CertificateAuthenticationDefaults.AuthenticationScheme)
@@ -15,14 +21,14 @@ builder.Services.AddControllers(options =>
 .AddXmlDataContractSerializerFormatters();
 
 // Example of defining inside the server error responses additional fields and detailed info messages
-//builder.Services.AddProblemDetails(options =>
-//{
-//    options.CustomizeProblemDetails = ctx => 
-//    {
-//        ctx.ProblemDetails.Extensions.Add("additionalInfo", "Additional info added for the example");
-//        ctx.ProblemDetails.Extensions.Add("server", Environment.MachineName);
-//    };
-//});
+// builder.Services.AddProblemDetails(options =>
+// {
+//     options.CustomizeProblemDetails = ctx => 
+//     {
+//         ctx.ProblemDetails.Extensions.Add("additionalInfo", "Additional info added for the example");
+//         ctx.ProblemDetails.Extensions.Add("server", Environment.MachineName);
+//     };
+// });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
