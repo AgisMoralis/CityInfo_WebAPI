@@ -1,3 +1,4 @@
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.StaticFiles;
 using Serilog;
@@ -51,6 +52,9 @@ builder.Services.AddSwaggerGen();
 
 // Use the FileExtensionContentTypeProvider servive to get the extension type of any file, to use for the content type of any returned FileContentResult
 builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
+
+// Add the 'LocalMailService' into the service container as transient, meaning that each time it is invoked a new instance of this service is created
+builder.Services.AddTransient<LocalMailService>();
 
 var app = builder.Build();
 

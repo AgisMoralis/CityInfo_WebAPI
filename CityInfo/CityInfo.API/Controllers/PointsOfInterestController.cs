@@ -1,6 +1,8 @@
 ﻿using CityInfo.API.Models;
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+
 namespace CityInfo.API.Controllers
 {
     [ApiController]
@@ -9,10 +11,12 @@ namespace CityInfo.API.Controllers
     {
         // Private members
         private readonly ILogger<PointsOfInterestController> _logger;
+        private readonly LocalMailService _mailService;
 
-        public PointsOfInterestController(ILogger<PointsOfInterestController> logger) 
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, LocalMailService mailService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
         }
 
         [HttpGet]
@@ -29,7 +33,7 @@ namespace CityInfo.API.Controllers
 
                 return Ok(city.PointsOfInterest);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 _logger.LogCritical($"Unexpected exception occurred when trying to access the points of interests of the city with id {cityId}.", ex);
                 return StatusCode(500, $"A problem occurred while handling your request.");
@@ -138,14 +142,14 @@ namespace CityInfo.API.Controllers
             // If that input JsonPatchDocument is valid and can be used for patching a
             // "PointOfInterest" object, the 'ModelState' will report itself as valid
             patchDocument.ApplyTo(pointOfInterestToPatch, ModelState);
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             // Check if the "PointOfInterestForUpdatingDto" is still valid after applying the JsonPatchDocument
             // This will use the attributes of the DTO object (model) for the validation
-            if(!TryValidateModel(pointOfInterestToPatch))
+            if (!TryValidateModel(pointOfInterestToPatch))
             {
                 return BadRequest(ModelState);
             }
@@ -171,7 +175,9 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            city.PointsOfInterest.Remove(pointOfInterestFromDatastore);
+            _ = city.PointsOfInterest.Remove(pointOfInterestFromDatastore);
+
+            _mailService.Send("Point of interest deleted.", $"The Point of Interest with ID {pointofinterestid} was deleted from the city with ID {cityId}.");
 
             return NoContent();
         }
