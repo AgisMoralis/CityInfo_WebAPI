@@ -1,5 +1,12 @@
 using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.StaticFiles;
+using Serilog;
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/cityinfoapi.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 // This solution in combination with the configuration file "appsettings.Development.json" gives flexibility on how to use the logging service
 // builder.Logging.ClearProviders();
 // builder.Logging.AddConsole();
+
+// Use the extension method "UseSerilog()" of Serilog that adds Serilog to the Services Collection
+builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddAuthentication(
@@ -19,6 +29,11 @@ builder.Services.AddControllers(options =>
     options.ReturnHttpNotAcceptable = true;
 }).AddNewtonsoftJson()
 .AddXmlDataContractSerializerFormatters();
+
+// By adding the "AddProblemDetails" service, the "ExceptionHandler" added in the middleware
+// is able to generate nice formatted error problem/messages in the response that will send to the
+// consumer, in case of e.g. unexpected exception/error that leads to the crash of the app
+builder.Services.AddProblemDetails();
 
 // Example of defining inside the server error responses additional fields and detailed info messages
 // builder.Services.AddProblemDetails(options =>
@@ -40,6 +55,14 @@ builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline (middleware pipeline).
+
+// By adding the ExceptionHandler at the beginning of the middleware,
+// ensures that exceptions raised by other parts of middleware added after this part, are managed as well
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
