@@ -6,7 +6,8 @@ namespace CityInfo.API
     {
         public List<CityDto> Cities { get; set; }
 
-        public static CitiesDatastore Current { get; set; } = new CitiesDatastore();
+        // Now that we use the dependency injection, we can register that type as a singleton in the service container
+        //public static CitiesDatastore Current { get; set; } = new CitiesDatastore();
 
         public CitiesDatastore()
         {

@@ -11,12 +11,14 @@ namespace CityInfo.API.Controllers
     {
         // Private members
         private readonly ILogger<PointsOfInterestController> _logger;
-        private readonly LocalMailService _mailService;
+        private readonly IMailService _mailService;
+        private readonly CitiesDatastore _citiesDatastore;
 
-        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, LocalMailService mailService)
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService mailService, CitiesDatastore citiesDatastore)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
+            _citiesDatastore = citiesDatastore ?? throw new ArgumentNullException(nameof(citiesDatastore));
         }
 
         [HttpGet]
@@ -24,7 +26,7 @@ namespace CityInfo.API.Controllers
         {
             try
             {
-                var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+                var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
                 if (city is null)
                 {
                     _logger.LogInformation($"The city with id {cityId} was not found in the Datastore, when trying to access the points of interests.");
@@ -43,7 +45,7 @@ namespace CityInfo.API.Controllers
         [HttpGet("{pointofinterestid}", Name = "GetPointOfInterest")]
         public ActionResult<PointOfInterestDto> GetPointOfInterest(int cityId, int pointOfInterestId)
         {
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
@@ -64,7 +66,7 @@ namespace CityInfo.API.Controllers
             //     return BadRequest();
             // }
 
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
@@ -97,7 +99,7 @@ namespace CityInfo.API.Controllers
             // NOTE: PUT actions can return a 200 response that includes the new Point of Interest as body of that response
             // NOTE: or can return a 204 response without any content in the results
 
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
@@ -119,7 +121,7 @@ namespace CityInfo.API.Controllers
         [HttpPatch("{pointofinterestid}")]
         public ActionResult PartiallyUpdatePointOfInterest(int cityId, int pointofinterestid, JsonPatchDocument<PointOfInterestForUpdatingDto> patchDocument)
         {
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
@@ -163,7 +165,7 @@ namespace CityInfo.API.Controllers
         [HttpDelete("{pointofinterestid}")]
         public ActionResult DeletePointOfInterest(int cityId, int pointofinterestid)
         {
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
