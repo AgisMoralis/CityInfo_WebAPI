@@ -7,10 +7,11 @@
 
         public LocalMailService(IConfiguration configuration)
         {
-            // Any file "appsettings.{Environment}.json" is loaded after the "appsettings.json" and overwrites the common variables
-            // Likeso, When the application is initiated in "Development" environment, the "mailToAddress" variable from "appsettings.json" is loaded
-            // When the application is initiated in "Production" environment, the "mailToAddress" variable from "appsettings.Production.json" is loaded,
-            // because it is also defined there, and therefore it overwrites the mailToAddress" variable value of the "appsettings.json"
+            // Any file "appsettings.{Environment}.json" is loaded after the "appsettings.json" and overwrites the common variables.
+            // Likeso, When the application is initiated in "Development" environment, the "mailToAddress" variable from "appsettings.Development.json" is loaded.
+            // When the application is initiated in "Production" environment, the "mailToAddress" variable from "appsettings.Production.json" is loaded.
+            // The "mailToAddress" variable is defined in the "appsettings.json" with the value "default@company.com", but because it is also defined in both
+            // environment configuration files, it is overwritten by the value "developer@company.com" or "admin@company.com" respectively.
 
             // NOTE: To change between "Development" and "Production" environment modify the "ASPNETCORE_ENVIRONMENT" from the "launchSettings.json"
 
