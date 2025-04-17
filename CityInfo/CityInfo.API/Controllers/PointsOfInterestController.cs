@@ -1,23 +1,51 @@
 ﻿using CityInfo.API.Models;
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+
 namespace CityInfo.API.Controllers
 {
     [ApiController]
     [Route("api/cities/{cityId}/[controller]")]
     public class PointsOfInterestController : ControllerBase
     {
-        [HttpGet()]
+        // Private members
+        private readonly ILogger<PointsOfInterestController> _logger;
+        private readonly IMailService _mailService;
+        private readonly CitiesDatastore _citiesDatastore;
+
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService mailService, CitiesDatastore citiesDatastore)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
+            _citiesDatastore = citiesDatastore ?? throw new ArgumentNullException(nameof(citiesDatastore));
+        }
+
+        [HttpGet]
         public ActionResult<IEnumerable<PointOfInterestDto>> GetPointsOfInterest(int cityId)
         {
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
-            return city is null ? NotFound() : Ok(city.PointsOfInterest);
+            try
+            {
+                var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
+                if (city is null)
+                {
+                    _logger.LogInformation($"The city with id {cityId} was not found in the Datastore, when trying to access the points of interests.");
+                    return NotFound();
+                }
+
+                return Ok(city.PointsOfInterest);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Unexpected exception occurred when trying to access the points of interests of the city with id {cityId}.", ex);
+                return StatusCode(500, $"A problem occurred while handling your request.");
+            }
         }
 
         [HttpGet("{pointofinterestid}", Name = "GetPointOfInterest")]
         public ActionResult<PointOfInterestDto> GetPointOfInterest(int cityId, int pointOfInterestId)
         {
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
@@ -38,7 +66,7 @@ namespace CityInfo.API.Controllers
             //     return BadRequest();
             // }
 
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
@@ -71,7 +99,7 @@ namespace CityInfo.API.Controllers
             // NOTE: PUT actions can return a 200 response that includes the new Point of Interest as body of that response
             // NOTE: or can return a 204 response without any content in the results
 
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
@@ -93,7 +121,7 @@ namespace CityInfo.API.Controllers
         [HttpPatch("{pointofinterestid}")]
         public ActionResult PartiallyUpdatePointOfInterest(int cityId, int pointofinterestid, JsonPatchDocument<PointOfInterestForUpdatingDto> patchDocument)
         {
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
@@ -116,14 +144,14 @@ namespace CityInfo.API.Controllers
             // If that input JsonPatchDocument is valid and can be used for patching a
             // "PointOfInterest" object, the 'ModelState' will report itself as valid
             patchDocument.ApplyTo(pointOfInterestToPatch, ModelState);
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             // Check if the "PointOfInterestForUpdatingDto" is still valid after applying the JsonPatchDocument
             // This will use the attributes of the DTO object (model) for the validation
-            if(!TryValidateModel(pointOfInterestToPatch))
+            if (!TryValidateModel(pointOfInterestToPatch))
             {
                 return BadRequest(ModelState);
             }
@@ -137,7 +165,7 @@ namespace CityInfo.API.Controllers
         [HttpDelete("{pointofinterestid}")]
         public ActionResult DeletePointOfInterest(int cityId, int pointofinterestid)
         {
-            var city = CitiesDatastore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city is null)
             {
                 return NotFound();
@@ -149,7 +177,9 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            city.PointsOfInterest.Remove(pointOfInterestFromDatastore);
+            _ = city.PointsOfInterest.Remove(pointOfInterestFromDatastore);
+
+            _mailService.Send("Point of interest deleted.", $"The Point of Interest with ID {pointofinterestid} was deleted from the city with ID {cityId}.");
 
             return NoContent();
         }
