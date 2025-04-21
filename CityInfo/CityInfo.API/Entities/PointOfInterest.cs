@@ -38,6 +38,6 @@ namespace CityInfo.API.Entities
         // which here is the 'PointOfInterest' class. Although it is recommended to do so, for clarity.
         // According to the "convention-based" approach, the 'ForeignKey' will be named based on the Navigation preperty's
         // class name (which in this case is 'City') followed by the term 'Id', resulting into this 'CityId' property.
-        public string CityId { get; set; }
+        public int CityId { get; set; }
     }
 }
