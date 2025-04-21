@@ -1,7 +1,9 @@
 using CityInfo.API;
+using CityInfo.API.DbContexts;
 using CityInfo.API.Services;
 using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -62,6 +64,10 @@ builder.Services.AddTransient<IMailService, LocalMailService>();
 builder.Services.AddTransient<IMailService, CloudMailService>();
 #endif
 builder.Services.AddSingleton<CitiesDatastore>();
+
+// Register the 'CityInfoContext' in the service container
+// as a DbContext with a 'scoped' lifetime.
+builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlite("Data Source=CityInfo.db"));
 
 var app = builder.Build();
 
