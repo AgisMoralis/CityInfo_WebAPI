@@ -24,6 +24,9 @@ namespace CityInfo.API.Entities
         [MaxLength(50)]
         public string Name { get; set; }
 
+        [MaxLength(200)]
+        public string? Description { get; set; }
+
         // This is considered a Navigation property and a relationship is created between
         // the current 'PointOfInterest' entry and the parent 'City' by the current Database provider.
         // Relationships discovered by convention will always target the primary key of the principal entity
