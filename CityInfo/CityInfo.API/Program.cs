@@ -67,7 +67,7 @@ builder.Services.AddSingleton<CitiesDatastore>();
 
 // Register the 'CityInfoContext' in the service container
 // as a DbContext with a 'scoped' lifetime.
-builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlite("Data Source=CityInfo.db"));
+builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:CityInfoDBConnectionString"]));
 
 var app = builder.Build();
 
