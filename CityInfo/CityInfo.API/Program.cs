@@ -71,6 +71,11 @@ builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOpti
 
 builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>();
 
+// This ensures the the assembly "CityInfo.API" will be added in the AutoMapper
+// and the AutoMapper will be able to scan this assembly for profiles (that make
+// mappings between DTO and Entity model classes)
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline (middleware pipeline).
