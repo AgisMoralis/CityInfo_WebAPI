@@ -30,25 +30,28 @@ namespace CityInfo.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<CityDto> GetCity(int id)
+        public async Task<IActionResult> GetCity(int id, bool includePointsOfInterest = false)
         {
-            return Ok();
-            //try
-            //{
-            //    var cityToReturn = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == id);
-            //    if (cityToReturn is null)
-            //    {
-            //        _logger.LogError($"The city with id {id} was not found in the Datastore, when trying to access the cities.");
-            //        return NotFound();
-            //    }
-            //
-            //    return Ok(cityToReturn);
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogCritical($"Unexpected exception occurred when trying to access the city with id {id}.", ex);
-            //    return StatusCode(500, $"A problem occurred while handling your request.");
-            //}
+            try
+            {
+                var cityEntity = await _cityInfoRepository.GetCityAsync(id, includePointsOfInterest);
+                if (cityEntity is null)
+                {
+                    _logger.LogError($"The city with id {id} was not found in the Datastore, when trying to access the cities.");
+                    return NotFound();
+                }
+
+                if (includePointsOfInterest) 
+                {
+                    return Ok(_mapper.Map<CityDto>(cityEntity));
+                }
+                return Ok(_mapper.Map<CityWithoutPointsOfInterestDto>(cityEntity));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Unexpected exception occurred when trying to access the city with id {id}.", ex);
+                return StatusCode(500, $"A problem occurred while handling your request.");
+            }
         }
     }
 }
