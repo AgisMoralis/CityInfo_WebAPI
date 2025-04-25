@@ -69,6 +69,8 @@ builder.Services.AddSingleton<CitiesDatastore>();
 // as a DbContext with a 'scoped' lifetime.
 builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlite(builder.Configuration["ConnectionStrings:CityInfoDBConnectionString"]));
 
+builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline (middleware pipeline).
