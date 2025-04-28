@@ -24,9 +24,17 @@ namespace CityInfo.API.Controllers
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities()
         {
-            var cityEntities = await _cityInfoRepository.GetCitiesAsync();
-            var result = _mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities);
-            return Ok(result);
+            try
+            {
+                var cityEntities = await _cityInfoRepository.GetCitiesAsync();
+                var result = _mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities);
+                return Ok(result);
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogCritical("Unexpected exception occurred when trying to get all cities from the database.", ex);
+                return StatusCode(500, $"A problem occurred while handling your request.");
+            }
         }
 
         [HttpGet("{id}")]
