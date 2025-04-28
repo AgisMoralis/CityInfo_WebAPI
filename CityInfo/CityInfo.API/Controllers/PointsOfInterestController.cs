@@ -71,44 +71,48 @@ namespace CityInfo.API.Controllers
             }
         }
 
-        //[HttpPost]
-        //public ActionResult<PointOfInterestDto> CreatePointOfInterest(int cityId, PointOfInterestForCreationDto pointOfInterest)
-        //{
-        //    // Because of the [ApiController] attribute, the annotations are automatically checked during model binding
-        //    // that affects the ModelState dictionary. The [ApiController] attribute ensures, in case of an invalid ModelState,
-        //    // that a bad request is returned as a response, with the validation error details in the body of the response
-        //    // if (!ModelState.IsValid) 
-        //    // {
-        //    //     return BadRequest();
-        //    // }
-        //
-        //    var city = _citiesDatastore.Cities.FirstOrDefault(c => c.Id == cityId);
-        //    if (city is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //
-        //    // Create a new Point of Interest and add it in the resources
-        //    var maxPointOfInterestId = city.PointsOfInterest.Max(c => c.Id);
-        //    var newPointOfInterest = new PointOfInterestDto()
-        //    {
-        //        Id = maxPointOfInterestId + 1,
-        //        Name = pointOfInterest.Name,
-        //        Description = pointOfInterest.Description,
-        //    };
-        //    city.PointsOfInterest.Add(newPointOfInterest);
-        //
-        //    // Returns a 201 HTTP response to successfully state that the new Point of Interest
-        //    // was created in the resources. The body of the response includes that new Point of Interest.
-        //    return CreatedAtRoute("GetPointOfInterest",
-        //        new
-        //        {
-        //            cityId = cityId,
-        //            pointOfInterestId = newPointOfInterest.Id
-        //        },
-        //        newPointOfInterest);
-        //}
-        //
+        [HttpPost]
+        public async Task<ActionResult<PointOfInterestDto>> CreatePointOfInterest(int cityId, PointOfInterestForCreationDto pointOfInterest)
+        {
+            // Because of the [ApiController] attribute, the annotations are automatically checked during model binding
+            // that affects the ModelState dictionary. The [ApiController] attribute ensures, in case of an invalid ModelState,
+            // that a bad request is returned as a response, with the validation error details in the body of the response
+            // if (!ModelState.IsValid) 
+            // {
+            //     return BadRequest();
+            // }
+
+            try
+            {
+                if (!await _cityInfoRepository.CityExistsAsync(cityId))
+                {
+                    _logger.LogInformation($"The city with id {cityId} was not found in the Datastore, when trying to access the points of interests.");
+                    return NotFound();
+                }
+
+                // Map the new Point of Interest to the entity and add it in the resources
+                var finalPointOfInterestEntityToSave = _mapper.Map<Entities.PointOfInterest>(pointOfInterest);
+                await _cityInfoRepository.AddPointOfInterestOnCityAsync(cityId, finalPointOfInterestEntityToSave);
+                await _cityInfoRepository.SaveChangesAsync();
+
+                // Returns a 201 HTTP response to successfully state that the new Point of Interest
+                // was created in the resources. The body of the response includes that new Point of Interest.
+                var createdPointOfInterestToReturn = _mapper.Map<PointOfInterestDto>(finalPointOfInterestEntityToSave);
+                return CreatedAtRoute("GetPointOfInterest",
+                    new
+                    {
+                        cityId = cityId,
+                        pointOfInterestId = createdPointOfInterestToReturn.Id
+                    },
+                    createdPointOfInterestToReturn);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Unexpected exception occurred when trying to create a new point of interests for the city with id {cityId}.", ex);
+                return StatusCode(500, $"A problem occurred while handling your request.");
+            }
+        }
+        
         //[HttpPut("{pointofinterestid}")]
         //public ActionResult UpdatePointOfInterest(int cityId, int pointofinterestid, PointOfInterestForUpdatingDto pointOfInterest)
         //{

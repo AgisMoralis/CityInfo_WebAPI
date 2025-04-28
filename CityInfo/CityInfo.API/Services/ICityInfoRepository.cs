@@ -23,5 +23,9 @@ namespace CityInfo.API.Services
         Task<IEnumerable<PointOfInterest>> GetPointsOfInterestOfCityAsync(int cityId);
 
         Task<PointOfInterest?> GetPointOfInterestOfCityAsync(int cityId, int pointOfInterestId);
+
+        Task AddPointOfInterestOnCityAsync(int cityId, PointOfInterest pointOfInterest);
+
+        Task<bool> SaveChangesAsync();
     }
 }
