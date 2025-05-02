@@ -403,6 +403,482 @@
 			]
 		},
 		{
+			"name": "Get City (apply a filter to get all cities from the database whose name are equal to Athens)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities?namefilter=Athens",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities"
+					],
+					"query": [
+						{
+							"key": "namefilter",
+							"value": "Athens"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get City (all cities from database whose name are equal to Athens)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities?namefilter=Athens",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities"
+							],
+							"query": [
+								{
+									"key": "namefilter",
+									"value": "Athens"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "55"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 11:20:05 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 2,\n        \"name\": \"Athens\",\n        \"description\": \"Ancient City\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get City (apply a search query to get all cities from the database that include the keyword 'with' in the name or description)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities?searchQuery=with",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities"
+					],
+					"query": [
+						{
+							"key": "searchQuery",
+							"value": "with"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get City (all cities from database whose name or description include the keyword 'with')",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities?searchQuery=with",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities"
+							],
+							"query": [
+								{
+									"key": "searchQuery",
+									"value": "with"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "128"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 12:30:03 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"NYC\",\n        \"description\": \"City with a lot of people\"\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Paris\",\n        \"description\": \"City with Eiffel Tower\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get City (apply a filter and a search query to get all cities from the database with the name Paris that include the keyword 'with' in the name or description)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities?namefilter=Paris&searchQuery=with",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities"
+					],
+					"query": [
+						{
+							"key": "namefilter",
+							"value": "Paris"
+						},
+						{
+							"key": "searchQuery",
+							"value": "with"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get City (all cities from database whose name is 'Paris' and the description or the name include the keyword 'with')",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities?namefilter=Paris&searchQuery=with",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities"
+							],
+							"query": [
+								{
+									"key": "namefilter",
+									"value": "Paris"
+								},
+								{
+									"key": "searchQuery",
+									"value": "with"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "64"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 12:33:07 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 3,\n        \"name\": \"Paris\",\n        \"description\": \"City with Eiffel Tower\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get City (apply paging when getting the 2nd ciity from the database, where each page includes only 1 city)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities?pageNumber=1&pageSize=1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get City (apply paging when getting the 1st ciity from the database, where each page includes only 1 city)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities?pageNumber=1&pageSize=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "55"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 14:09:22 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 2,\n        \"name\": \"Athens\",\n        \"description\": \"Ancient City\"\n    }\n]"
+				},
+				{
+					"name": "Get City (apply paging when getting the 2nd ciity from the database, where each page includes only 1 city)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities?pageNumber=2&pageSize=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "2"
+								},
+								{
+									"key": "pageSize",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "65"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 14:10:23 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"NYC\",\n        \"description\": \"City with a lot of people\"\n    }\n]"
+				},
+				{
+					"name": "Get City (apply paging when getting the 3rd ciity from the database, where each page includes only 1 city)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities?pageNumber=3&pageSize=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "3"
+								},
+								{
+									"key": "pageSize",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "64"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 14:11:06 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 3,\n        \"name\": \"Paris\",\n        \"description\": \"City with Eiffel Tower\"\n    }\n]"
+				},
+				{
+					"name": "Get City & Pagination metadata in Response Header (apply paging when getting the 1st ciity from the database, where each page includes only 1 city)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities?pageNumber=1&pageSize=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "55"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 14:39:33 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "X-Pagination",
+							"value": "{\"TotalItemCount\":3,\"PageSize\":1,\"TotalPageCount\":3,\"CurrentPage\":1}"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 2,\n        \"name\": \"Athens\",\n        \"description\": \"Ancient City\"\n    }\n]"
+				}
+			]
+		},
+		{
 			"name": "Get Points of Interest (get the points of interest of the 3rd city from the datastore)",
 			"request": {
 				"auth": {
@@ -1823,7 +2299,7 @@
 						}
 					],
 					"cookie": [],
-					"body": ""
+					"body": null
 				}
 			]
 		}
