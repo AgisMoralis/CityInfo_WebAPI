@@ -6,7 +6,7 @@ namespace CityInfo.API.Services
     {
         Task<IEnumerable<City>> GetCitiesAsync();
 
-        Task<IEnumerable<City>> GetCitiesAsync(string? name, string? searchQuery);
+        Task<(IEnumerable<City>, PaginationMetadata)> GetCitiesAsync(string? name, string? searchQuery, int pageNumber, int pageSize);
 
         /// <summary>
         /// NOTE: Explicitly defining here that the returned type is

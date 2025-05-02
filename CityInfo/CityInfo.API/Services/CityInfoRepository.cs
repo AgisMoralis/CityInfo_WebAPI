@@ -7,6 +7,7 @@ namespace CityInfo.API.Services
     public class CityInfoRepository : ICityInfoRepository
     {
         private readonly CityInfoContext _context;
+
         public CityInfoRepository(CityInfoContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
@@ -17,21 +18,22 @@ namespace CityInfo.API.Services
             return await _context.Cities.OrderBy(c => c.Name).ToListAsync();
         }
 
-        public async Task<IEnumerable<City>> GetCitiesAsync(string? name, string? searchQuery)
+        public async Task<(IEnumerable<City>, PaginationMetadata)> GetCitiesAsync(string? name, string? searchQuery, int pageNumber, int pageSize)
         {
-            if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(searchQuery))
-            {
-                return await GetCitiesAsync();
-            }
+            // We should get rid of that return, because we always want to apply paging in the returned data
+            // if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(searchQuery))
+            // {
+            //     return await GetCitiesAsync();
+            // }
 
             var collectionOfCities = _context.Cities as IQueryable<City>;
 
+            // Filtering and Searching applied here
             if (!string.IsNullOrWhiteSpace(name))
             {
                 name = name.Trim();
                 collectionOfCities = collectionOfCities.Where(c => c.Name == name);
             }
-
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
                 searchQuery = searchQuery.Trim();
@@ -39,7 +41,16 @@ namespace CityInfo.API.Services
                     .Where(c => c.Name.Contains(searchQuery) || (c.Description != null && c.Description.Contains(searchQuery)));
             }
 
-            return await collectionOfCities.OrderBy(c => c.Name).ToListAsync();
+            // Paging applied here
+            var totalAmountOfItems = await collectionOfCities.CountAsync();
+            var paginationMetadata = new PaginationMetadata(totalAmountOfItems, pageSize, pageNumber);
+            var collectionToReturn = await collectionOfCities
+                .OrderBy(c => c.Name)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (collectionToReturn, paginationMetadata);
         }
 
         public async Task<City?> GetCityAsync(int cityId, bool includePointsOfInterest)
