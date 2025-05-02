@@ -6,6 +6,8 @@ namespace CityInfo.API.Services
     {
         Task<IEnumerable<City>> GetCitiesAsync();
 
+        Task<IEnumerable<City>> GetCitiesAsync(string? name);
+
         /// <summary>
         /// NOTE: Explicitly defining here that the returned type is
         /// a nullable 'City?' serves two main purposes:
