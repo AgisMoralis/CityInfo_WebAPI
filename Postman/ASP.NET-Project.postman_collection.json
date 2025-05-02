@@ -37,7 +37,7 @@
 			},
 			"response": [
 				{
-					"name": "Get Cities",
+					"name": "Get Cities (from local datastore with all points of interest)",
 					"originalRequest": {
 						"method": "GET",
 						"header": [
@@ -83,6 +83,54 @@
 					],
 					"cookie": [],
 					"body": "<ArrayOfCityDto xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/CityInfo.API.Models\">\n    <CityDto>\n        <Description>City with a lot of people</Description>\n        <Id>1</Id>\n        <Name>NYC</Name>\n        <PointsOfInterest>\n            <PointOfInterestDto>\n                <Description>Big park</Description>\n                <Id>1</Id>\n                <Name>Central Park</Name>\n            </PointOfInterestDto>\n            <PointOfInterestDto>\n                <Description>Tall building</Description>\n                <Id>2</Id>\n                <Name>Empire State</Name>\n            </PointOfInterestDto>\n        </PointsOfInterest>\n    </CityDto>\n    <CityDto>\n        <Description>Ancient City</Description>\n        <Id>2</Id>\n        <Name>Athens</Name>\n        <PointsOfInterest>\n            <PointOfInterestDto>\n                <Description>Ancient temple</Description>\n                <Id>1</Id>\n                <Name>Parthenon</Name>\n            </PointOfInterestDto>\n            <PointOfInterestDto>\n                <Description>Center of the city</Description>\n                <Id>2</Id>\n                <Name>Acropolis</Name>\n            </PointOfInterestDto>\n        </PointsOfInterest>\n    </CityDto>\n    <CityDto>\n        <Description>City with Eiffel Tower</Description>\n        <Id>3</Id>\n        <Name>Paris</Name>\n        <PointsOfInterest>\n            <PointOfInterestDto>\n                <Description>Tall tower</Description>\n                <Id>1</Id>\n                <Name>Eiffel Tower</Name>\n            </PointOfInterestDto>\n            <PointOfInterestDto>\n                <Description>World's biggest museum</Description>\n                <Id>2</Id>\n                <Name>Louvre Museum</Name>\n            </PointOfInterestDto>\n        </PointsOfInterest>\n    </CityDto>\n</ArrayOfCityDto>"
+				},
+				{
+					"name": "Get Cities (from database without points of interest)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "xml",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "617"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/xml; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 09:16:01 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "<ArrayOfCityWithoutPointsOfInterestDto xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://schemas.datacontract.org/2004/07/CityInfo.API.Models\">\n    <CityWithoutPointsOfInterestDto>\n        <Description>Ancient City</Description>\n        <Id>2</Id>\n        <Name>Athens</Name>\n    </CityWithoutPointsOfInterestDto>\n    <CityWithoutPointsOfInterestDto>\n        <Description>City with a lot of people</Description>\n        <Id>1</Id>\n        <Name>NYC</Name>\n    </CityWithoutPointsOfInterestDto>\n    <CityWithoutPointsOfInterestDto>\n        <Description>City with Eiffel Tower</Description>\n        <Id>3</Id>\n        <Name>Paris</Name>\n    </CityWithoutPointsOfInterestDto>\n</ArrayOfCityWithoutPointsOfInterestDto>"
 				}
 			]
 		},
@@ -110,7 +158,7 @@
 			},
 			"response": [
 				{
-					"name": "Get City",
+					"name": "Get City (from local datastore with all points of interest)",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
@@ -151,6 +199,206 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"id\": 3,\n    \"name\": \"Paris\",\n    \"description\": \"City with Eiffel Tower\",\n    \"numberOfPointsOfInterest\": 2,\n    \"pointsOfInterest\": [\n        {\n            \"id\": 1,\n            \"name\": \"Eiffel Tower\",\n            \"description\": \"Tall tower\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Louvre Museum\",\n            \"description\": \"World's biggest museum\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get City (from database without points of interest)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "62"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 09:14:04 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"name\": \"Paris\",\n    \"description\": \"City with Eiffel Tower\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get City (get the 3rd city from the database with points of interest)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/3?includePointsOfInterest=true",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"3"
+					],
+					"query": [
+						{
+							"key": "includePointsOfInterest",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get City (get the 3rd city from the database with points of interest)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3?includePointsOfInterest=true",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3"
+							],
+							"query": [
+								{
+									"key": "includePointsOfInterest",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "241"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 25 Apr 2025 16:10:43 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"name\": \"Paris\",\n    \"description\": \"City with Eiffel Tower\",\n    \"numberOfPointsOfInterest\": 2,\n    \"pointsOfInterest\": [\n        {\n            \"id\": 5,\n            \"name\": \"Eiffel Tower\",\n            \"description\": \"Tall tower\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Louvre Museum\",\n            \"description\": \"World's biggest museum\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get City (get the 3rd city from the database without points of interest)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/3?includePointsOfInterest=false",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"3"
+					],
+					"query": [
+						{
+							"key": "includePointsOfInterest",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get City (get the 3rd city from the database without points of interest)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3?includePointsOfInterest=false",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3"
+							],
+							"query": [
+								{
+									"key": "includePointsOfInterest",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "62"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 09:22:41 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"name\": \"Paris\",\n    \"description\": \"City with Eiffel Tower\"\n}"
 				}
 			]
 		},
@@ -179,7 +427,7 @@
 			},
 			"response": [
 				{
-					"name": "Get Points of Interest",
+					"name": "Get Points of Interest (from local datastore)",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
@@ -221,11 +469,125 @@
 					],
 					"cookie": [],
 					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Eiffel Tower\",\n        \"description\": \"Tall tower\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Louvre Museum\",\n        \"description\": \"World's biggest museum\"\n    }\n]"
+				},
+				{
+					"name": "Get Points of Interest (from database)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "192"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 09:23:18 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 5,\n        \"name\": \"Eiffel Tower\",\n        \"description\": \"Tall tower\"\n    },\n    {\n        \"id\": 6,\n        \"name\": \"Louvre (updated)\",\n        \"description\": \"Biggest museum (updated)\"\n    },\n    {\n        \"id\": 7,\n        \"name\": \"Montmartre\",\n        \"description\": \"Nice church\"\n    }\n]"
 				}
 			]
 		},
 		{
-			"name": "Get Point of Interest (get the 1st point of interest of the 3rd city from the datastore)",
+			"name": "Get Points of Interest (try to get the points of interest of a non-existing city in the datastore)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/4/pointsofinterest",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"4",
+						"pointsofinterest"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Point of Interest (Error 404)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/4/pointsofinterest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"4",
+								"pointsofinterest"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "162"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/problem+json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Apr 2025 17:11:30 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"traceId\": \"00-a49ff8f247f704a136f7fe7e56fa25e9-a624c040cb3dff67-00\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Point of Interest (get the 1st point of interest of the 3rd city from local datastore)",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -293,6 +655,75 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"id\": 1,\n    \"name\": \"Eiffel Tower\",\n    \"description\": \"Tall tower\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Point of Interest (get the 1st point of interest of the 3rd city from database)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/5",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"3",
+						"pointsofinterest",
+						"5"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Point of Interest",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest",
+								"5"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "57"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 09:27:34 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 5,\n    \"name\": \"Eiffel Tower\",\n    \"description\": \"Tall tower\"\n}"
 				}
 			]
 		},
@@ -589,6 +1020,92 @@
 			]
 		},
 		{
+			"name": "Post File (upload a new image in the resources of the application, using form-data file in the POST body request)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Agis/GIT/ASP.NET-Project/Postman/Data/GithubNeon.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/files",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"files"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post File (upload a new image in the resources of the application)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Agis/GIT/ASP.NET-Project/Postman/Data/GithubNeon.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/files",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"files"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 15 Apr 2025 20:32:43 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "The file has been uploaded successfully"
+				}
+			]
+		},
+		{
 			"name": "Put Point of Interest (fully update the 2nd point of interest of the 3rd city of the datastore and receive 204 no content response)",
 			"request": {
 				"auth": {
@@ -598,7 +1115,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Louvre\",\r\n    \"description\": \"Biggest museum\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Louvre (updated)\",\r\n    \"description\": \"Biggest museum (updated)\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -623,7 +1140,7 @@
 			},
 			"response": [
 				{
-					"name": "Put (update) Point of Interest",
+					"name": "Put Point of Interest (fully update the 2nd point of interest of the 3rd city of the datastore and receive 204 no content response)",
 					"originalRequest": {
 						"method": "PUT",
 						"header": [],
@@ -659,6 +1176,52 @@
 						{
 							"key": "Date",
 							"value": "Sat, 12 Apr 2025 20:45:44 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Put Point of Interest (fully update the 2nd point of interest of the 3rd city of the database and receive 204 no content response)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Louvre (updated)\",\r\n    \"description\": \"Biggest museum (updated)\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/6",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest",
+								"6"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 09:12:11 GMT"
 						},
 						{
 							"key": "Server",
@@ -705,7 +1268,7 @@
 			},
 			"response": [
 				{
-					"name": "Put Point of Interest (no 'Description' parameter, the default shall be used)",
+					"name": "Put Point of Interest (fully update the 2nd point of interest of the 3rd city of the local datastore without 'Description' parameter - default one used - and receive 204 no content response)",
 					"originalRequest": {
 						"method": "PUT",
 						"header": [],
@@ -749,6 +1312,52 @@
 					],
 					"cookie": [],
 					"body": null
+				},
+				{
+					"name": "Put Point of Interest (fully update the 2nd point of interest of the 3rd city of the database without 'Description' parameter - default one used - and receive 204 no content response)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Louvre\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/6",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"3",
+								"pointsofinterest",
+								"6"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 02 May 2025 09:32:29 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						}
+					],
+					"cookie": [],
+					"body": null
 				}
 			]
 		},
@@ -762,7 +1371,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/name\",\r\n        \"value\": \"Updated - Park\"\r\n    }\r\n]",
+					"raw": "[\r\n    {\r\n        \"op\": \"replace\",\r\n        \"path\": \"/name\",\r\n        \"value\": \"Partially upd - Park\"\r\n    }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -787,7 +1396,7 @@
 			},
 			"response": [
 				{
-					"name": "Put Point of Interest (fully update the 2nd point of interest of the 3rd city of the datastore without 'Description' parameter - default one used - and receive 204 no content response",
+					"name": "Patch Point of Interest",
 					"originalRequest": {
 						"method": "PATCH",
 						"header": [],
@@ -869,7 +1478,7 @@
 			},
 			"response": [
 				{
-					"name": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"name": "Patch Point of Interest",
 					"originalRequest": {
 						"method": "PATCH",
 						"header": [],
@@ -951,7 +1560,7 @@
 			},
 			"response": [
 				{
-					"name": "Patch",
+					"name": "Patch Point of Interest",
 					"originalRequest": {
 						"method": "PATCH",
 						"header": [],
@@ -1041,7 +1650,7 @@
 			},
 			"response": [
 				{
-					"name": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"name": "Patch Point of Interest",
 					"originalRequest": {
 						"method": "PATCH",
 						"header": [],
@@ -1119,7 +1728,7 @@
 			},
 			"response": [
 				{
-					"name": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1",
+					"name": "Delete Point of Interest (delete the 1st point of interest of the 1st city from the local datastore)",
 					"originalRequest": {
 						"method": "DELETE",
 						"header": [],
@@ -1158,25 +1767,12 @@
 			]
 		},
 		{
-			"name": "Post File (upload a new image in the resources of the application, using form-data file in the POST body request)",
+			"name": "Delete Point of Interest (delete the 3rd point of interest of the 3rd city from the database)",
 			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
+				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"type": "file",
-							"src": "/C:/Users/Agis/GIT/ASP.NET-Project/Postman/Data/GithubNeon.png"
-						}
-					]
-				},
 				"url": {
-					"raw": "https://localhost:{{portNumber}}/api/files",
+					"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/7",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -1184,28 +1780,21 @@
 					"port": "{{portNumber}}",
 					"path": [
 						"api",
-						"files"
+						"cities",
+						"3",
+						"pointsofinterest",
+						"7"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Post File (upload a new image in the resources of the application)",
+					"name": "Delete Point of Interest (delete the 3rd point of interest of the 3rd city from the database)",
 					"originalRequest": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "file",
-									"type": "file",
-									"src": "/C:/Users/Agis/GIT/ASP.NET-Project/Postman/Data/GithubNeon.png"
-								}
-							]
-						},
 						"url": {
-							"raw": "https://localhost:{{portNumber}}/api/files",
+							"raw": "https://localhost:{{portNumber}}/api/cities/3/pointsofinterest/7",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1213,33 +1802,28 @@
 							"port": "{{portNumber}}",
 							"path": [
 								"api",
-								"files"
+								"cities",
+								"3",
+								"pointsofinterest",
+								"7"
 							]
 						}
 					},
-					"status": "OK",
-					"code": 200,
+					"status": "No Content",
+					"code": 204,
 					"_postman_previewlanguage": "plain",
 					"header": [
 						{
-							"key": "Content-Type",
-							"value": "text/plain; charset=utf-8"
-						},
-						{
 							"key": "Date",
-							"value": "Tue, 15 Apr 2025 20:32:43 GMT"
+							"value": "Fri, 02 May 2025 10:04:55 GMT"
 						},
 						{
 							"key": "Server",
 							"value": "Kestrel"
-						},
-						{
-							"key": "Transfer-Encoding",
-							"value": "chunked"
 						}
 					],
 					"cookie": [],
-					"body": "The file has been uploaded successfully"
+					"body": ""
 				}
 			]
 		}
