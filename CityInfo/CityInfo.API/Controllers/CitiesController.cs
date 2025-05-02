@@ -22,14 +22,14 @@ namespace CityInfo.API.Controllers
         }
 
         [HttpGet()]
-        public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities([FromQuery(Name = "namefilter")] string? name)
+        public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities([FromQuery(Name = "namefilter")] string? name, string? searchQuery)
         {
             // The parameter "[FromQuery(Name = "name")] string? name" is used as an explicit indicator how an HTTP query/filter can be used in this action.
             // The "namefilter" shall be the parameter used in the HTTP query and it's value is assigned to the input 'name' variable.
             // The "[FromQuery(Name = "name")] string? name" can be defined simply as "string? name" and the HTTP query/filter would autmatically match "name" filter if used in the HTTP query
             try
             {
-                var cityEntities = await _cityInfoRepository.GetCitiesAsync(name);
+                var cityEntities = await _cityInfoRepository.GetCitiesAsync(name, searchQuery);
                 var result = _mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities);
                 return Ok(result);
             }
