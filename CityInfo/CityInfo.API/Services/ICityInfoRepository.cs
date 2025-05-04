@@ -1,4 +1,5 @@
 ﻿using CityInfo.API.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CityInfo.API.Services
 {
@@ -21,6 +22,8 @@ namespace CityInfo.API.Services
         Task<City?> GetCityAsync(int cityId, bool includePointsOfInterest);
 
         Task<bool> CityExistsAsync(int cityId);
+
+        Task<bool> CityNameMatchesCityIdAsync(string? cityName, int cityId);
 
         Task<IEnumerable<PointOfInterest>> GetPointsOfInterestOfCityAsync(int cityId);
 

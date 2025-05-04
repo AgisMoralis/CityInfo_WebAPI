@@ -94,7 +94,7 @@ namespace CityInfo.API.Controllers
             // POST request against to what is stored inside that DB. Therefore here
             // we assume that the passed credentials from any requests are valid.
 
-            return new CityInfoUser(1, "Agleoras", "Agis", "Surname", "Brussels");
+            return new CityInfoUser(1, "Agleoras", "Agis", "Surname", "NYC");
         }
     }
 }

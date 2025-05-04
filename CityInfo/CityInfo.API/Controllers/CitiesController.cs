@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using CityInfo.API.Models;
 using CityInfo.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 namespace CityInfo.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class CitiesController : ControllerBase
     {
@@ -25,8 +27,8 @@ namespace CityInfo.API.Controllers
 
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities(
-            [FromQuery(Name = "namefilter")] string? name, 
-            string? searchQuery, 
+            [FromQuery(Name = "namefilter")] string? name,
+            string? searchQuery,
             int pageNumber = 1,
             int pageSize = 10)
         {
@@ -45,7 +47,7 @@ namespace CityInfo.API.Controllers
                 var result = _mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities);
                 return Ok(result);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 _logger.LogCritical("Unexpected exception occurred when trying to get all cities from the database.", ex);
                 return StatusCode(500, $"A problem occurred while handling your request.");
@@ -64,7 +66,7 @@ namespace CityInfo.API.Controllers
                     return NotFound();
                 }
 
-                if (includePointsOfInterest) 
+                if (includePointsOfInterest)
                 {
                     return Ok(_mapper.Map<CityDto>(cityEntity));
                 }
