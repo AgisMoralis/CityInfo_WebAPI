@@ -8,7 +8,7 @@ namespace CityInfo.API.Controllers
 {
     [ApiController]
     //[Authorize]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class FilesController : ControllerBase
     {
         // Private members
