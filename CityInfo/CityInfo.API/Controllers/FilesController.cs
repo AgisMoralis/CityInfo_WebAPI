@@ -1,4 +1,5 @@
-﻿using CityInfo.API.Models;
+﻿using Asp.Versioning;
+using CityInfo.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.StaticFiles;
 namespace CityInfo.API.Controllers
 {
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     public class FilesController : ControllerBase
     {
@@ -27,6 +28,7 @@ namespace CityInfo.API.Controllers
         }
 
         [HttpGet("{fileId}")]
+        [ApiVersion(0.1, Deprecated = true)]
         public ActionResult<IEnumerable<PointOfInterestDto>> GetFile(int fileId)
         {
             try
