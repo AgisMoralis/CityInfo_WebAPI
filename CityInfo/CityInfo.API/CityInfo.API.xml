@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CityInfo.API</name>
+    </assembly>
+    <members>
+        <member name="M:CityInfo.API.Controllers.CitiesController.GetCity(System.Int32,System.Boolean)">
+            <summary>
+            Get a city by an Id
+            </summary>
+            <param name="id">The Id of the city to get</param>
+            <param name="includePointsOfInterest">Whether or not to include the points of interests of the city returned</param>
+            <returns>A city with or without its points of interests</returns>
+            <response code="200">Returns the requested city</response>
+        </member>
+        <member name="M:CityInfo.API.DbContexts.CityInfoContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            1) This allows to manually construct our model, if the conventions we used until
+            now were not sufficient or if we preffered to be more explicit.
+            2) It can also be used to provide data for seeding the database.
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="M:CityInfo.API.Entities.City.#ctor(System.String)">
+            <summary>
+            By defining this overloaded constructor,
+            we convey to any reader/developer that we
+            always want this 'City' class to have a name
+            </summary>
+        </member>
+        <member name="M:CityInfo.API.Entities.PointOfInterest.#ctor(System.String)">
+            <summary>
+            Similarly here, as we did with 'City' class,
+            by defining this overloaded constructor,
+            we convey to any reader/developer that we always
+            want this 'PointOfInterest' class to have a name
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Migrations.CityInfoDatabaseInitialMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:CityInfo.API.Migrations.CityInfoDatabaseInitialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CityInfo.API.Migrations.CityInfoDatabaseInitialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CityInfo.API.Migrations.CityInfoDatabaseInitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:CityInfo.API.Migrations.CityInfoDatabaseAddPointOfInterestDescription">
+            <inheritdoc />
+        </member>
+        <member name="M:CityInfo.API.Migrations.CityInfoDatabaseAddPointOfInterestDescription.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CityInfo.API.Migrations.CityInfoDatabaseAddPointOfInterestDescription.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CityInfo.API.Migrations.CityInfoDatabaseAddPointOfInterestDescription.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:CityInfo.API.Migrations.InitialDataSeed">
+            <inheritdoc />
+        </member>
+        <member name="M:CityInfo.API.Migrations.InitialDataSeed.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CityInfo.API.Migrations.InitialDataSeed.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:CityInfo.API.Migrations.InitialDataSeed.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:CityInfo.API.Models.CityWithoutPointsOfInterestDto">
+            <summary>
+            A city without its points of interests
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.CityWithoutPointsOfInterestDto.Id">
+            <summary>
+            The Id of the city
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.CityWithoutPointsOfInterestDto.Name">
+            <summary>
+            The name of the city
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.CityWithoutPointsOfInterestDto.Description">
+            <summary>
+            The description of the city
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="M:CityInfo.API.Services.CloudMailService.Send(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CityInfo.API.Services.ICityInfoRepository.GetCityAsync(System.Int32,System.Boolean)">
+            <summary>
+            NOTE: Explicitly defining here that the returned type is
+            a nullable 'City?' serves two main purposes:
+            1) Explicitly defining that the returned result can be null,
+            so that all developers are aware and handle it appropriately.
+            2) Enables compiler warnings if someone tries to use the returned
+            type directly without checking it is null (safer code practice).
+            </summary>
+            <param name="cityId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CityInfo.API.Services.LocalMailService.Send(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>
