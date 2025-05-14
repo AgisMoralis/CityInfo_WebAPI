@@ -26,10 +26,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Use the extension method "UseSerilog()" of Serilog that adds Serilog to the Services Collection
 builder.Host.UseSerilog();
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddAuthentication(
        CertificateAuthenticationDefaults.AuthenticationScheme)
        .AddCertificate();
+
 builder.Services.AddControllers(options =>
 {
     // When a consumer asks for a specific type of content representation that the API does not support, the API should return a status code about that
@@ -65,6 +66,7 @@ builder.Services.AddTransient<IMailService, LocalMailService>();
 #else
 builder.Services.AddTransient<IMailService, CloudMailService>();
 #endif
+
 builder.Services.AddSingleton<CitiesDatastore>();
 
 // Register the 'CityInfoContext' in the service container
@@ -93,6 +95,7 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
+// Create a new policy that can be used during authorization at the controller or action level
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("MustBeFromAthens", policy =>
@@ -104,12 +107,15 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddApiVersioning(setupAction =>
 {
+    // API response header shall contain information about the versioning (what is supported etc)
     setupAction.ReportApiVersions = true;
+    // Default API version configuration (v1.0 by default used if not defined)
     setupAction.AssumeDefaultVersionWhenUnspecified = true;
     setupAction.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
 }).AddMvc()
 .AddApiExplorer(setupAction =>
 {
+    // The API version shall be substitued in route template (as part of the routing and not as a parameter of the HTTP request body)
     setupAction.SubstituteApiVersionInUrl = true;
 });
 
@@ -117,6 +123,7 @@ builder.Services.AddApiVersioning(setupAction =>
 var provider = builder.Services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
 builder.Services.AddSwaggerGen(setupAction =>
 {
+    // Add all different API version pages in the Swagger UI documentation
     foreach (var description in provider.ApiVersionDescriptions)
     {
         setupAction.SwaggerDoc(
@@ -129,9 +136,37 @@ builder.Services.AddSwaggerGen(setupAction =>
             });
     }
 
+    // Get the XML comments extracted by the C# code of the CityInfo.API project documentation and use them in Swagger UI documentation
     var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
     setupAction.IncludeXmlComments(xmlCommentsFullPath);
+
+    // Add here a new definition in Swagger documentation, to document the API authentication
+    setupAction.AddSecurityDefinition("CityInfoApiBearerAuthentication",
+        new()
+        {
+            Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+            Scheme = "Bearer",
+            Description = "Input a valid token to access this API"
+        });
+
+    // Need to refer to the OpenAPI security API scheme used when the security definition was added
+    // This will use the API key used through the Swagger UI on each request, once it is defined through the "Authorize" UI option
+    setupAction.AddSecurityRequirement(
+        new()
+        {
+            {
+                new()
+                {
+                    Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                    { 
+                        Type= Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                        Id = "CityInfoApiBearerAuthentication"
+                    }
+                },
+                new List<string>()
+            }
+        });
 });
 
 var app = builder.Build();
@@ -150,6 +185,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(setupAction =>
     {
+        // Configure the Swagger UI
         foreach (var description in app.DescribeApiVersions())
         {
             setupAction.SwaggerEndpoint(
