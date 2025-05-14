@@ -1204,6 +1204,172 @@
 			]
 		},
 		{
+			"name": "Get Point of Interest (get the 1st point of interest of the 1st city from database by requesting specific version 2 of API via query parameter)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1?api-version=2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"cities",
+						"1",
+						"pointsofinterest",
+						"1"
+					],
+					"query": [
+						{
+							"key": "api-version",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1?api-version=2",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/cities/1/pointsofinterest/1?api-version=2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"cities",
+								"1",
+								"pointsofinterest",
+								"1"
+							],
+							"query": [
+								{
+									"key": "api-version",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "63"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 May 2025 12:16:03 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "api-supported-versions",
+							"value": "2.0"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"Partially upd - Park\",\n    \"description\": \"Big park\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Point of Interest (get the 1st point of interest of the 1st city from database by requesting specific version 2 of API with versioned route)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/v2.0/cities/1/pointsofinterest/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"v2.0",
+						"cities",
+						"1",
+						"pointsofinterest",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://localhost:{{portNumber}}/api/v2.0/cities/1/pointsofinterest/1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/v2.0/cities/1/pointsofinterest/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"v2.0",
+								"cities",
+								"1",
+								"pointsofinterest",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "63"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 May 2025 12:29:55 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "api-supported-versions",
+							"value": "2.0"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"Partially upd - Park\",\n    \"description\": \"Big park\"\n}"
+				}
+			]
+		},
+		{
 			"name": "Get File (get the file with id 2 from the datastore)",
 			"request": {
 				"auth": {
@@ -1220,6 +1386,61 @@
 					"port": "{{portNumber}}",
 					"path": [
 						"api",
+						"files",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get File (get the file with id 2 from the datastore by requesting specific deprecated version 0.1 of API via query parameter)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/files/2?api-version=0.1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"files",
+						"2"
+					],
+					"query": [
+						{
+							"key": "api-version",
+							"value": "0.1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get File (get the file with id 2 from the datastore by requesting specific deprecated version 0.1 of API with versioned route)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/v0.1/files/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"v0.1",
 						"files",
 						"2"
 					]
@@ -1578,6 +1799,89 @@
 					],
 					"cookie": [],
 					"body": "The file has been uploaded successfully"
+				}
+			]
+		},
+		{
+			"name": "Post Authentication info the get back a token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Agleoras\",\r\n    \"password\": \"this is a random password\"   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:{{portNumber}}/api/authentication/authenticate",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "{{portNumber}}",
+					"path": [
+						"api",
+						"authentication",
+						"authenticate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post Authentication info the get back a token",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Agleoras\",\r\n    \"password\": \"this is a random password\"   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{portNumber}}/api/authentication/authenticate",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{portNumber}}",
+							"path": [
+								"api",
+								"authentication",
+								"authenticate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 04 May 2025 17:48:11 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkFnaXMiLCJmYW1pbHlfbmFtZSI6IlN1cm5hbWUiLCJjaXR5IjoiQnJ1c3NlbHMiLCJuYmYiOjE3NDYzODA4OTEsImV4cCI6MTc0NjM4NDQ5MSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAzMCIsImF1ZCI6ImNpdHlpbmZvYXBpIn0.ZC-iUNBive0KVpVwQed1vqC9NRSgDho6vACUVmGn6Is"
 				}
 			]
 		},

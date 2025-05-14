@@ -1,4 +1,4 @@
-﻿using CityInfo.API.Models;
+﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
@@ -7,7 +7,9 @@ namespace CityInfo.API.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion(1)]
+    [ApiVersion(2)]
     public class FilesController : ControllerBase
     {
         // Private members
@@ -26,8 +28,18 @@ namespace CityInfo.API.Controllers
             };
         }
 
+        /// <summary>
+        /// Get a specific file by an Id
+        /// </summary>
+        /// <param name="fileId">The Id of the file to be returned</param>
+        /// <returns>A file (image)</returns>
+        /// <response code="200">The file (image) with the requested Id</response>
         [HttpGet("{fileId}")]
-        public ActionResult<IEnumerable<PointOfInterestDto>> GetFile(int fileId)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetFile(int fileId)
         {
             try
             {
@@ -62,7 +74,16 @@ namespace CityInfo.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Uploads a new file into the server
+        /// </summary>
+        /// <param name="file">The new file to be uploaded</param>
+        /// <returns>A confirmation 200 Status message that the upload was successful</returns>
+        /// <response code="200">A confirmation message that the new file was successfully uploaded</response>
         [HttpPost]
+        [ApiVersion(0.1, Deprecated = true)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> CreateFile(IFormFile file)
         {
             try
