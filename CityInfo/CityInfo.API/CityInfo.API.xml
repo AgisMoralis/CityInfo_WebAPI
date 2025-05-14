@@ -4,14 +4,64 @@
         <name>CityInfo.API</name>
     </assembly>
     <members>
+        <member name="T:CityInfo.API.Controllers.AuthenticationController.AuthenticationRequestBody">
+            <summary>
+            The credentials provided by the user during the try to establish a secure connection
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Controllers.AuthenticationController.AuthenticationRequestBody.Username">
+            <summary>
+            The username of the user credentials
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Controllers.AuthenticationController.AuthenticationRequestBody.Password">
+            <summary>
+            The pasword of the user credentials
+            </summary>
+        </member>
+        <member name="M:CityInfo.API.Controllers.AuthenticationController.Authenticate(CityInfo.API.Controllers.AuthenticationController.AuthenticationRequestBody)">
+            <summary>
+            Verifies the input credentials defined by the user and returns a JWT token to secure the connection with the API
+            </summary>
+            <param name="authenticationRequestBody">The credentials (username and password) indicated by the user during the connection try</param>
+            <returns>A JWT token to secure the connection with the API</returns>
+            <response code="200">Returns the JWT token for secure connection</response>
+        </member>
+        <member name="M:CityInfo.API.Controllers.CitiesController.GetCities(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Get all cities without their points of interests
+            </summary>
+            <param name="name">The filter that shall be applied in the cities returned, based on their name (optional)</param>
+            <param name="searchQuery">The query that shall be applied in the cities filtered, checking if their name includes that keyword (optional)</param>
+            <param name="pageNumber">The specified page to show in the results, after returning those applicable filtered and queried results</param>
+            <param name="pageSize">The amount of cities that each page can include in the results</param>
+            <returns>All cities without their points of interests</returns>
+            <response code="200">Returns the list with all filtered cities</response>
+        </member>
         <member name="M:CityInfo.API.Controllers.CitiesController.GetCity(System.Int32,System.Boolean)">
             <summary>
-            Get a city by an Id
+            Get a city by an Id, with or without its points of interests
             </summary>
             <param name="id">The Id of the city to get</param>
             <param name="includePointsOfInterest">Whether or not to include the points of interests of the city returned</param>
             <returns>A city with or without its points of interests</returns>
             <response code="200">Returns the requested city</response>
+        </member>
+        <member name="M:CityInfo.API.Controllers.FilesController.GetFile(System.Int32)">
+            <summary>
+            Get a specific file by an Id
+            </summary>
+            <param name="fileId">The Id of the file to be returned</param>
+            <returns>A file (image)</returns>
+            <response code="200">The file (image) with the requested Id</response>
+        </member>
+        <member name="M:CityInfo.API.Controllers.FilesController.CreateFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Uploads a new file into the server
+            </summary>
+            <param name="file">The new file to be uploaded</param>
+            <returns>A confirmation 200 Status message that the upload was successful</returns>
+            <response code="200">A confirmation message that the new file was successfully uploaded</response>
         </member>
         <member name="M:CityInfo.API.DbContexts.CityInfoContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
@@ -72,6 +122,36 @@
         <member name="M:CityInfo.API.Migrations.InitialDataSeed.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:CityInfo.API.Models.CityDto">
+            <summary>
+            A city with its points of interests
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.CityDto.Id">
+            <summary>
+            The Id of the city
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.CityDto.Name">
+            <summary>
+            The name of the city
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.CityDto.Description">
+            <summary>
+            The description of the city
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.CityDto.NumberOfPointsOfInterest">
+            <summary>
+            The total points of interests of the city
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.CityDto.PointsOfInterest">
+            <summary>
+            A list with all the points of interests of the city
+            </summary>
+        </member>
         <member name="T:CityInfo.API.Models.CityWithoutPointsOfInterestDto">
             <summary>
             A city without its points of interests
@@ -90,6 +170,56 @@
         <member name="P:CityInfo.API.Models.CityWithoutPointsOfInterestDto.Description">
             <summary>
             The description of the city
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Models.PointOfInterestDto">
+            <summary>
+            A point of interest of a city
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.PointOfInterestDto.Id">
+            <summary>
+            The Id of the point of interest
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.PointOfInterestDto.Name">
+            <summary>
+            The name of the point of interest
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.PointOfInterestDto.Description">
+            <summary>
+            The description of the point of interest
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Models.PointOfInterestForCreationDto">
+            <summary>
+            A point of interest of a city (used to create a new one)
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.PointOfInterestForCreationDto.Name">
+            <summary>
+            The name of the new point of interest
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.PointOfInterestForCreationDto.Description">
+            <summary>
+            The description of the new point of interest
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Models.PointOfInterestForUpdatingDto">
+            <summary>
+            A point of interest of a city (used to update an existing one)
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.PointOfInterestForUpdatingDto.Name">
+            <summary>
+            The updated name of an existing point of interest
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Models.PointOfInterestForUpdatingDto.Description">
+            <summary>
+            The updated description of an existing point of interest
             </summary>
         </member>
         <member name="T:CityInfo.API.Properties.Resources">

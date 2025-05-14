@@ -28,7 +28,19 @@ namespace CityInfo.API.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <summary>
+        /// Get all cities without their points of interests
+        /// </summary>
+        /// <param name="name">The filter that shall be applied in the cities returned, based on their name (optional)</param>
+        /// <param name="searchQuery">The query that shall be applied in the cities filtered, checking if their name includes that keyword (optional)</param>
+        /// <param name="pageNumber">The specified page to show in the results, after returning those applicable filtered and queried results</param>
+        /// <param name="pageSize">The amount of cities that each page can include in the results</param>
+        /// <returns>All cities without their points of interests</returns>
+        /// <response code="200">Returns the list with all filtered cities</response>
         [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities(
             [FromQuery(Name = "namefilter")] string? name,
             string? searchQuery,
@@ -58,7 +70,7 @@ namespace CityInfo.API.Controllers
         }
 
         /// <summary>
-        /// Get a city by an Id
+        /// Get a city by an Id, with or without its points of interests
         /// </summary>
         /// <param name="id">The Id of the city to get</param>
         /// <param name="includePointsOfInterest">Whether or not to include the points of interests of the city returned</param>
@@ -67,6 +79,7 @@ namespace CityInfo.API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetCity(int id, bool includePointsOfInterest = false)
         {
