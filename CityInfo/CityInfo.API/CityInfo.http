@@ -1,0 +1,44 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@schema=https
+@hostname=localhost
+@port=7030
+
+### Get a new JWT token to use for the authentication
+POST {{schema}}://{{hostname}}:{{port}}/api/authentication/authenticate
+Content-Type:application/json
+
+{
+  "username": "Agleoras",
+  "password": "My random password"
+}
+
+### Get all cities (without any GET header parameter defined - default ones used)
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkFnaXMiLCJmYW1pbHlfbmFtZSI6IlN1cm5hbWUiLCJjaXR5IjoiQXRoZW5zIiwibmJmIjoxNzQ3Mzg5NDI3LCJleHAiOjE3NDczOTMwMjcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMzAiLCJhdWQiOiJjaXR5aW5mb2FwaSJ9.haT0SdWwZSsxRfZqIRvQjh6Wtotm2ZoazKEN98TxBvA
+
+### Get all cities (with GET Header 'Accept' parameter defined to 'xml')
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Accept:application/xml
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkFnaXMiLCJmYW1pbHlfbmFtZSI6IlN1cm5hbWUiLCJjaXR5IjoiQXRoZW5zIiwibmJmIjoxNzQ3Mzg5NDI3LCJleHAiOjE3NDczOTMwMjcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMzAiLCJhdWQiOiJjaXR5aW5mb2FwaSJ9.haT0SdWwZSsxRfZqIRvQjh6Wtotm2ZoazKEN98TxBvA
+
+### Create a new point of interest (with POST request body defined)
+@name createPointOfInterest
+POST {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest
+Accept:application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkFnaXMiLCJmYW1pbHlfbmFtZSI6IlN1cm5hbWUiLCJjaXR5IjoiQXRoZW5zIiwibmJmIjoxNzQ3Mzg5NDI3LCJleHAiOjE3NDczOTMwMjcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMzAiLCJhdWQiOiJjaXR5aW5mb2FwaSJ9.haT0SdWwZSsxRfZqIRvQjh6Wtotm2ZoazKEN98TxBvA
+Content-Type:application/json
+
+{
+  "name": "http_file new POI",
+  "description": "http_file description"
+}
+
+### Get a specific point of interest by ID (manual method - need to insert the correct POI ID)
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest/16
+Accept:application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkFnaXMiLCJmYW1pbHlfbmFtZSI6IlN1cm5hbWUiLCJjaXR5IjoiQXRoZW5zIiwibmJmIjoxNzQ3Mzg5NDI3LCJleHAiOjE3NDczOTMwMjcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMzAiLCJhdWQiOiJjaXR5aW5mb2FwaSJ9.haT0SdWwZSsxRfZqIRvQjh6Wtotm2ZoazKEN98TxBvA
+
+### Delete a specific point of interest by ID (manual method - need to insert the correct POI ID)
+DELETE {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest/16
+Accept:application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkFnaXMiLCJmYW1pbHlfbmFtZSI6IlN1cm5hbWUiLCJjaXR5IjoiQXRoZW5zIiwibmJmIjoxNzQ3Mzg5NDI3LCJleHAiOjE3NDczOTMwMjcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMzAiLCJhdWQiOiJjaXR5aW5mb2FwaSJ9.haT0SdWwZSsxRfZqIRvQjh6Wtotm2ZoazKEN98TxBvA

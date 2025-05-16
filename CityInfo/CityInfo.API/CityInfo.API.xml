@@ -16,7 +16,7 @@
         </member>
         <member name="P:CityInfo.API.Controllers.AuthenticationController.AuthenticationRequestBody.Password">
             <summary>
-            The pasword of the user credentials
+            The password of the user credentials
             </summary>
         </member>
         <member name="M:CityInfo.API.Controllers.AuthenticationController.Authenticate(CityInfo.API.Controllers.AuthenticationController.AuthenticationRequestBody)">
@@ -42,7 +42,7 @@
             <summary>
             Get a city by an Id, with or without its points of interests
             </summary>
-            <param name="id">The Id of the city to get</param>
+            <param name="cityId">The Id of the city to get</param>
             <param name="includePointsOfInterest">Whether or not to include the points of interests of the city returned</param>
             <returns>A city with or without its points of interests</returns>
             <response code="200">Returns the requested city</response>
@@ -62,6 +62,62 @@
             <param name="file">The new file to be uploaded</param>
             <returns>A confirmation 200 Status message that the upload was successful</returns>
             <response code="200">A confirmation message that the new file was successfully uploaded</response>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.GetPointsOfInterest(System.Int32)">
+            <summary>
+            Get all the points of interests, of a specific city
+            </summary>
+            <param name="cityId">The Id of the city whose points of interests shall be retrieved</param>
+            <returns>All the points of interests of a specific city</returns>
+            <response code="200">Returns the list with all points of interests</response>
+            <response code="403">The user although authenticated, does not have access to the resources, because he/she is only allowed to retrieve (based on defined policies) the points of interests for the city he belongs to</response>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.GetPointOfInterest(System.Int32,System.Int32)">
+            <summary>
+            Gets a specific point of interests by Id, of a specific city
+            </summary>
+            <param name="cityId">The Id of the city whose point of interest shall be retrieved</param>
+            <param name="pointOfInterestId">The Id of the point of interest that shall be retrieved</param>
+            <returns>The point of interest with the requested Id</returns>
+            <response code="200">Returns a specific point of interest</response>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.CreatePointOfInterest(System.Int32,CityInfo.API.Models.PointOfInterestForCreationDto)">
+            <summary>
+            Creates a new point of interests, for a specific city
+            </summary>
+            <param name="cityId">The Id of the city to add a new point of interest to</param>
+            <param name="pointOfInterest">The new point of interest that shall be added</param>
+            <returns>The point of interest that was created successfully</returns>
+            <response code="200">The new point of interest added in a specific city</response>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.UpdatePointOfInterest(System.Int32,System.Int32,CityInfo.API.Models.PointOfInterestForUpdatingDto)">
+            <summary>
+            Updates all information of a specific point of interests by Id, for a specific city
+            </summary>
+            <param name="cityId">The Id of the city, whose existing point of interest shall be updated</param>
+            <param name="pointofinterestid">The Id of the existing point of interest that shall be updated</param>
+            <param name="pointOfInterest">The updated information for the existing point of interest</param>
+            <returns>No content</returns>
+            <response code="204">No content after the succesful update</response>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.PartiallyUpdatePointOfInterest(System.Int32,System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{CityInfo.API.Models.PointOfInterestForUpdatingDto})">
+            <summary>
+            Updates specific information of a specific point of interests by Id, for a specific city
+            </summary>
+            <param name="cityId">The Id of the city, whose existing point of interest shall be updated</param>
+            <param name="pointofinterestid">The Id of the existing point of interest that shall be updated</param>
+            <param name="patchDocument">A JSON patch document that includes all the information that shall be updated on the existing point of interest</param>
+            <returns>No content</returns>
+            <response code="204">No content after the succesful update</response>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.DeletePointOfInterest(System.Int32,System.Int32)">
+            <summary>
+            Deletes a specific point of interests by Id, for a specific city
+            </summary>
+            <param name="cityId">The Id of the city, whose existing point of interest shall be deleted</param>
+            <param name="pointofinterestid">The Id of the existing point of interest that shall be deleted</param>
+            <returns>No content</returns>
+            <response code="204">No content after the succesful delete</response>
         </member>
         <member name="M:CityInfo.API.DbContexts.CityInfoContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>

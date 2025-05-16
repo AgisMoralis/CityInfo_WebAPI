@@ -98,10 +98,10 @@ builder.Services.AddAuthentication("Bearer")
 // Create a new policy that can be used during authorization at the controller or action level
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("MustBeFromAthens", policy =>
+    options.AddPolicy("MustBeFromAcceptableCity", policy =>
     {
         policy.RequireAuthenticatedUser();
-        policy.RequireClaim("city", "Athens");
+        policy.RequireClaim("city", "NYC", "Athens", "Paris");
     });
 });
 

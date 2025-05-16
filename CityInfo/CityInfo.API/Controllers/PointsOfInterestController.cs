@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CityInfo.API.Controllers
 {
     [ApiController]
-    [Authorize(Policy = "MustBeFromAthens")]
+    [Authorize(Policy = "MustBeFromAcceptableCity")]
     [Route("api/v{version:apiVersion}/cities/{cityId}/[controller]")]
     [ApiVersion(2)]
     public class PointsOfInterestController : ControllerBase
@@ -28,7 +28,20 @@ namespace CityInfo.API.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <summary>
+        /// Get all the points of interests, of a specific city
+        /// </summary>
+        /// <param name="cityId">The Id of the city whose points of interests shall be retrieved</param>
+        /// <returns>All the points of interests of a specific city</returns>
+        /// <response code="200">Returns the list with all points of interests</response>
+        /// <response code="403">The user although authenticated, does not have access to the resources, because he/she is only allowed to retrieve (based on defined policies) the points of interests for the city he belongs to</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PointOfInterestDto>>> GetPointsOfInterest(int cityId)
         {
             try
@@ -63,7 +76,19 @@ namespace CityInfo.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a specific point of interests by Id, of a specific city
+        /// </summary>
+        /// <param name="cityId">The Id of the city whose point of interest shall be retrieved</param>
+        /// <param name="pointOfInterestId">The Id of the point of interest that shall be retrieved</param>
+        /// <returns>The point of interest with the requested Id</returns>
+        /// <response code="200">Returns the specified point of interest by Id</response>
         [HttpGet("{pointofinterestid}", Name = "GetPointOfInterest")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PointOfInterestDto>> GetPointOfInterest(int cityId, int pointOfInterestId)
         {
             try
@@ -90,7 +115,19 @@ namespace CityInfo.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates a new point of interests, for a specific city
+        /// </summary>
+        /// <param name="cityId">The Id of the city to add a new point of interest to</param>
+        /// <param name="pointOfInterest">The new point of interest that shall be added</param>
+        /// <returns>The point of interest that was created successfully</returns>
+        /// <response code="200">The new point of interest added in a specific city</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<PointOfInterestDto>> CreatePointOfInterest(int cityId, PointOfInterestForCreationDto pointOfInterest)
         {
             // Because of the [ApiController] attribute, the annotations are automatically checked during model binding
@@ -132,7 +169,20 @@ namespace CityInfo.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates all information of a specific point of interests by Id, for a specific city
+        /// </summary>
+        /// <param name="cityId">The Id of the city, whose existing point of interest shall be updated</param>
+        /// <param name="pointofinterestid">The Id of the existing point of interest that shall be updated</param>
+        /// <param name="pointOfInterest">The updated information for the existing point of interest</param>
+        /// <returns>No content</returns>
+        /// <response code="204">No content after the succesful update</response>
         [HttpPut("{pointofinterestid}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> UpdatePointOfInterest(int cityId, int pointofinterestid, PointOfInterestForUpdatingDto pointOfInterest)
         {
             try
@@ -166,7 +216,20 @@ namespace CityInfo.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates specific information of a specific point of interests by Id, for a specific city
+        /// </summary>
+        /// <param name="cityId">The Id of the city, whose existing point of interest shall be updated</param>
+        /// <param name="pointofinterestid">The Id of the existing point of interest that shall be updated</param>
+        /// <param name="patchDocument">A JSON patch document that includes all the information that shall be updated on the existing point of interest</param>
+        /// <returns>No content</returns>
+        /// <response code="204">No content after the succesful update</response>
         [HttpPatch("{pointofinterestid}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> PartiallyUpdatePointOfInterest(int cityId, int pointofinterestid,
             JsonPatchDocument<PointOfInterestForUpdatingDto> patchDocument)
         {
@@ -216,7 +279,19 @@ namespace CityInfo.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes a specific point of interests by Id, for a specific city
+        /// </summary>
+        /// <param name="cityId">The Id of the city, whose existing point of interest shall be deleted</param>
+        /// <param name="pointofinterestid">The Id of the existing point of interest that shall be deleted</param>
+        /// <returns>No content</returns>
+        /// <response code="204">No content after the succesful delete</response>
         [HttpDelete("{pointofinterestid}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> DeletePointOfInterest(int cityId, int pointofinterestid)
         {
             try
