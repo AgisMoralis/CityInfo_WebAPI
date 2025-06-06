@@ -1,1 +1,19 @@
-# ASP.NET-Project
+# CityInfo - Web API Project
+- ASP.NET Core (.NET 8.0)
+- Entity Framework
+- Postman
+- Swagger
+- MVC Pattern
+- Dependency Injection
+- Asynchronous code
+- Routing
+- JsonPatch Document
+- AutoMapper
+- Repository Pattern
+- Database migration
+- Searching, Filtering and Pagination
+- API securing with JWTBearer tokens
+- Authorization policies
+- Documenting and Versioning API
+- Serilog
+- HTTP_REPL & .http files for testing API endpoints

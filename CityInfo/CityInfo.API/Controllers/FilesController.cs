@@ -36,6 +36,7 @@ namespace CityInfo.API.Controllers
         /// <response code="200">The file (image) with the requested Id</response>
         [HttpGet("{fileId}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -83,6 +84,7 @@ namespace CityInfo.API.Controllers
         [HttpPost]
         [ApiVersion(0.1, Deprecated = true)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> CreateFile(IFormFile file)
         {

@@ -39,6 +39,7 @@ namespace CityInfo.API.Controllers
         /// <response code="200">Returns the list with all filtered cities</response>
         [HttpGet()]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities(
@@ -72,23 +73,24 @@ namespace CityInfo.API.Controllers
         /// <summary>
         /// Get a city by an Id, with or without its points of interests
         /// </summary>
-        /// <param name="id">The Id of the city to get</param>
+        /// <param name="cityId">The Id of the city to get</param>
         /// <param name="includePointsOfInterest">Whether or not to include the points of interests of the city returned</param>
         /// <returns>A city with or without its points of interests</returns>
         /// <response code="200">Returns the requested city</response>
-        [HttpGet("{id}")]
+        [HttpGet("{cityId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetCity(int id, bool includePointsOfInterest = false)
+        public async Task<IActionResult> GetCity(int cityId, bool includePointsOfInterest = false)
         {
             try
             {
-                var cityEntity = await _cityInfoRepository.GetCityAsync(id, includePointsOfInterest);
+                var cityEntity = await _cityInfoRepository.GetCityAsync(cityId, includePointsOfInterest);
                 if (cityEntity is null)
                 {
-                    _logger.LogError($"The city with id {id} was not found in the Datastore, when trying to access the cities.");
+                    _logger.LogError($"The city with id {cityId} was not found in the Datastore, when trying to access the cities.");
                     return NotFound();
                 }
 
@@ -100,7 +102,7 @@ namespace CityInfo.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogCritical($"Unexpected exception occurred when trying to access the city with id {id}.", ex);
+                _logger.LogCritical($"Unexpected exception occurred when trying to access the city with id {cityId}.", ex);
                 return StatusCode(500, $"A problem occurred while handling your request.");
             }
         }

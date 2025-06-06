@@ -24,7 +24,7 @@ namespace CityInfo.API.Controllers
             public string? Username { get; set; }
 
             /// <summary>
-            /// The pasword of the user credentials
+            /// The password of the user credentials
             /// </summary>
             public string? Password { get; set; }
         }
@@ -128,7 +128,15 @@ namespace CityInfo.API.Controllers
             // POST request against to what is stored inside that DB. Therefore here
             // we assume that the passed credentials from any requests are valid.
 
-            return new CityInfoUser(1, "Agleoras", "Agis", "Surname", "Athens");
+            string GetUserCity(string usernameStr) => usernameStr switch
+            {
+                var s when !string.IsNullOrWhiteSpace(s) && s.Contains("NYC") => "NYC",
+                var s when !string.IsNullOrWhiteSpace(s) && s.Contains("Athens") => "Athens",
+                var s when !string.IsNullOrWhiteSpace(s) && s.Contains("Paris") => "Paris",
+                _ => "Unknown"
+            };
+
+            return new CityInfoUser(1, "Agleoras", "Agis", "Surname", GetUserCity(username));
         }
     }
 }
