@@ -79,7 +79,7 @@
             <param name="cityId">The Id of the city whose point of interest shall be retrieved</param>
             <param name="pointOfInterestId">The Id of the point of interest that shall be retrieved</param>
             <returns>The point of interest with the requested Id</returns>
-            <response code="200">Returns a specific point of interest</response>
+            <response code="200">Returns the specified point of interest by Id</response>
         </member>
         <member name="M:CityInfo.API.Controllers.PointsOfInterestController.CreatePointOfInterest(System.Int32,CityInfo.API.Models.PointOfInterestForCreationDto)">
             <summary>
