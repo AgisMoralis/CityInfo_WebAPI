@@ -1,6 +1,7 @@
 # CityInfo - Web API Project
 - ASP.NET Core (.NET 8.0)
 - Entity Framework
+- SQLite
 - Postman
 - Swagger
 - MVC Pattern
